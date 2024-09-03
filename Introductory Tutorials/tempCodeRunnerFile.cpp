@@ -1,0 +1,1 @@
+cout<<"The factorial of "<<a<< " is "<<factorial(a)<<endl;
