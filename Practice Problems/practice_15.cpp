@@ -1,0 +1,114 @@
+/*
+D. Right Left Wrong
+time limit per test2 seconds
+memory limit per test256 megabytes
+Vlad found a strip of n cells, numbered from left to right from 1 to n. In the i-th cell, there is a positive integer ai and a letter si, where all si are either 'L' or 'R'.
+
+Vlad invites you to try to score the maximum possible points by performing any (possibly zero) number of operations.
+
+In one operation, you can choose two indices l and r (1≤l<r≤n) such that sl = 'L' and sr = 'R' and do the following:
+
+add al+al+1+⋯+ar−1+ar points to the current score;replace si with '.' for all l≤i≤r, meaning you can no longer choose these indices.For example, consider the following strip:
+
+3   5   1   4   3   2
+L	R	L	L	L	R
+You can first choose l=1, r=2 and add 3+5=8 to your score.
+
+3   5   1   4   3   2
+.	.	L	L	L	R
+Then choose l=3, r=6 and add 1+4+3+2=10 to your score.
+
+3   5   1   4   3   2
+.	.	.	.	.	.
+As a result, it is impossible to perform another operation, and the final score is 18.
+
+What is the maximum score that can be achieved?
+
+Input
+The first line contains one integer t (1≤t≤104) — the number of test cases.
+
+The first line of each test case contains one integer n (2≤n≤2⋅105) — the length of the strip.
+
+The second line of each test case contains n integers a1,a2,…,an (1≤ai≤105) — the numbers written on the strip.
+
+The third line of each test case contains a string s of n characters 'L' and 'R'.
+
+It is guaranteed that the sum of the values of n across all test cases does not exceed 2⋅105.
+
+Output
+For each test case, output one integer — the maximum possible number of points that can be scored.
+
+Example
+Input
+4
+6
+3 5 1 4 3 2
+LRLLLR
+2
+2 8
+LR
+2
+3 9
+RL
+5
+1 2 3 4 5
+LRLRR
+Output
+18
+10
+0
+22
+*/
+/**
+ * Solves the problem of finding the maximum score that can be achieved by choosing
+ * two non-overlapping intervals on a strip of numbers and adding the sum of the
+ * numbers in those intervals.
+ *
+ * The program reads in a series of test cases, where each test case consists of:
+ * - The length of the strip (n)
+ * - The numbers written on the strip (a1, a2, ..., an)
+ * - A string of 'L' and 'R' characters indicating whether each position on the
+ *   strip should be chosen from the left or right.
+ *
+ * The program then calculates the maximum score that can be achieved and outputs
+ * it for each test case.
+ */
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+int32_t main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        int a[n];
+        vector<int> v(n+1,0);
+        for(int i=0;i<n;i++){
+            cin>>a[i];
+            v[i+1]=v[i]+a[i];
+        }
+        string s;
+        cin>>s;
+        int l=0;
+        int r=n-1;
+        int sum=0;
+        while(l<r){
+            if(s[l]=='L'&&s[r]=='R'){
+                sum+=v[r+1]-v[l];
+                l++;
+                r--;
+            }
+            else if(s[l]=='R' || s[r]=='L'){
+                if (s[l]=='R'){
+                    l++;
+                }
+                if(s[r]=='L'){
+                    r--;
+                }
+            }
+        }
+        cout<<sum<<endl;
+    }
+    return 0;
+}
