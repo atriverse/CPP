@@ -10,3 +10,4 @@ int main() {
     else std::cout << "pre-standard C++." << __cplusplus;
     std::cout << "\n";
 }
+// For checking the version
